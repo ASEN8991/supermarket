@@ -85,15 +85,26 @@ import {getHomeMultidata,getHomeGoods} from '../../network/home';
     },
     created(){
       //1.请求多个数据
-      getHomeMultidata().then(res =>{
+      this.getHomeMultidata()
+      //2.请求商品数据
+      this.getHomeGoods('pop')
+      this.getHomeGoods('news')
+      this.getHomeGoods('sell')
+    },
+    methods:{
+      getHomeMultidata(){
+        getHomeMultidata().then(res =>{
         console.log(res),
         this.banners = res.data.banner.list,
         this.recommends = res.data.recommend.list
       })
-      //2.请求商品数据
-      getHomeGoods('pop',1).then(res =>{
+      },
+      getHomeGoods(type){
+        const page = this.goods[type].page + 1
+        getHomeGoods(type,page).then(res =>{
         console.log(res);
       })
+      }
     }
   }
 </script>
